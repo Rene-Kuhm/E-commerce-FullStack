@@ -1,32 +1,32 @@
 import { extendTheme } from "@chakra-ui/react";
 
-// Tema personalizado para EliteStore
+// Tema personalizado para SportFusion (estilo Nike)
 const theme = extendTheme({
-  // Paleta de colores profesional
+  // Paleta de colores inspirada en Nike
   colors: {
     brand: {
-      50: "#e6f1ff",
-      100: "#b8d5ff",
-      200: "#8ab9ff",
-      300: "#5c9dff",
-      400: "#2e81ff",
-      500: "#0065e6", // Color principal
-      600: "#0050b4",
-      700: "#003b82",
-      800: "#002651",
-      900: "#001021",
+      50: "#f2f2f2",
+      100: "#d9d9d9",
+      200: "#bfbfbf",
+      300: "#a6a6a6",
+      400: "#8c8c8c",
+      500: "#000000", // Negro principal de Nike
+      600: "#000000",
+      700: "#000000",
+      800: "#000000",
+      900: "#000000",
     },
     accent: {
-      50: "#e6fbf9",
-      100: "#ccf7f3",
-      200: "#99efea",
-      300: "#66e7e0",
-      400: "#33dfd7",
-      500: "#00d7cd", // Color de acento
-      600: "#00aca4",
-      700: "#00817b",
-      800: "#005652",
-      900: "#002b29",
+      50: "#ffe5e5",
+      100: "#ffb8b8",
+      200: "#ff8a8a",
+      300: "#ff5c5c",
+      400: "#ff2e2e",
+      500: "#ff0000", // Rojo de Nike
+      600: "#cc0000",
+      700: "#990000",
+      800: "#660000",
+      900: "#330000",
     },
     neutral: {
       50: "#f7fafc",
@@ -41,71 +41,97 @@ const theme = extendTheme({
       900: "#171923",
     },
   },
-  // Tipografía moderna y profesional
+  // Tipografía minimalista estilo Nike
   fonts: {
-    heading: "'Montserrat', 'Inter', system-ui, sans-serif",
-    body: "'Open Sans', 'Inter', system-ui, sans-serif",
+    heading: "'Futura', 'Helvetica Neue', 'Arial', sans-serif",
+    body: "'Helvetica Neue', 'Arial', sans-serif",
   },
-  // Estilos globales
+  // Estilos globales inspirados en Nike
   styles: {
     global: (props) => ({
       body: {
-        bg: props.colorMode === "dark" ? "gray.900" : "gray.50",
-        color: props.colorMode === "dark" ? "white" : "gray.800",
+        bg: props.colorMode === "dark" ? "gray.900" : "white",
+        color: props.colorMode === "dark" ? "white" : "black",
         lineHeight: "tall",
+        fontWeight: "400",
+        letterSpacing: "-0.01em",
       },
       "*::placeholder": {
         color: props.colorMode === "dark" ? "gray.400" : "gray.500",
       },
       "*, *::before, &::after": {
-        borderColor: props.colorMode === "dark" ? "gray.700" : "gray.200",
+        borderColor: props.colorMode === "dark" ? "gray.700" : "gray.100",
+      },
+      "h1, h2, h3, h4, h5, h6": {
+        letterSpacing: "-0.02em",
+        textTransform: "uppercase",
       },
     }),
   },
-  // Personalización de componentes
+  // Personalización de componentes estilo Nike
   components: {
     Button: {
       baseStyle: {
-        fontWeight: "600",
-        borderRadius: "md",
+        fontWeight: "700",
+        borderRadius: "full", // Botones redondeados como Nike
+        letterSpacing: "0.02em",
+        textTransform: "uppercase",
         _focus: {
-          boxShadow: "outline",
+          boxShadow: "none",
         },
       },
       variants: {
         solid: (props) => ({
-          bg: props.colorScheme === "brand" ? "brand.500" :
+          bg: props.colorScheme === "brand" ? "black" :
               props.colorScheme === "accent" ? "accent.500" : undefined,
           color: "white",
           _hover: {
-            bg: props.colorScheme === "brand" ? "brand.600" :
+            bg: props.colorScheme === "brand" ? "gray.800" :
                 props.colorScheme === "accent" ? "accent.600" : undefined,
             _disabled: {
-              bg: props.colorScheme === "brand" ? "brand.500" :
+              bg: props.colorScheme === "brand" ? "black" :
                   props.colorScheme === "accent" ? "accent.500" : undefined,
             },
           },
         }),
         outline: (props) => ({
-          borderColor: props.colorScheme === "brand" ? "brand.500" :
+          borderColor: props.colorScheme === "brand" ? "black" :
                       props.colorScheme === "accent" ? "accent.500" : undefined,
-          color: props.colorScheme === "brand" ? "brand.500" :
+          color: props.colorScheme === "brand" ? "black" :
                 props.colorScheme === "accent" ? "accent.500" : undefined,
+          borderWidth: "1px",
           _hover: {
             bg: props.colorMode === "dark" ? "whiteAlpha.100" :
-                props.colorScheme === "brand" ? "brand.50" :
+                props.colorScheme === "brand" ? "gray.100" :
                 props.colorScheme === "accent" ? "accent.50" : undefined,
           },
         }),
         ghost: (props) => ({
-          color: props.colorScheme === "brand" ? "brand.500" :
+          color: props.colorScheme === "brand" ? "black" :
                 props.colorScheme === "accent" ? "accent.500" : undefined,
           _hover: {
             bg: props.colorMode === "dark" ? "whiteAlpha.100" :
-                props.colorScheme === "brand" ? "brand.50" :
+                props.colorScheme === "brand" ? "gray.100" :
                 props.colorScheme === "accent" ? "accent.50" : undefined,
           },
         }),
+        // Variante Nike especial
+        nike: {
+          bg: "black",
+          color: "white",
+          borderRadius: "full",
+          px: 8,
+          py: 6,
+          fontSize: "md",
+          fontWeight: "bold",
+          _hover: {
+            transform: "translateY(-2px)",
+            boxShadow: "lg",
+          },
+          _active: {
+            transform: "translateY(0)",
+          },
+        },
       },
       defaultProps: {
         colorScheme: "brand",

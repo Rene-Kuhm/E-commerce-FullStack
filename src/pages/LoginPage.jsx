@@ -19,10 +19,18 @@ import {
   AlertIcon,
   InputGroup,
   InputRightElement,
-  IconButton
+  IconButton,
+  VStack,
+  HStack,
+  Checkbox,
+  Image,
+  SimpleGrid,
+  Icon
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { FaFacebook, FaGoogle, FaApple } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+import BRAND from "../constants/brandConfig";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -42,7 +50,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     setDocumentMeta(
-      "Iniciar Sesión",
+      `Iniciar Sesión | ${BRAND.NAME}`,
       "Inicia sesión en tu cuenta para acceder a tus pedidos, favoritos y más."
     );
   }, []);
@@ -92,159 +100,305 @@ const LoginPage = () => {
   };
 
   return (
-    <Box>
-      {/* Header */}
-      <Box bg={useColorModeValue("blue.500", "blue.800")} py={4} px={8} color="white">
-        <Flex justify="space-between" align="center">
-          <Heading as={RouterLink} to="/" size="lg" _hover={{ textDecoration: "none" }}>E-Commerce</Heading>
-          <Flex align="center" gap={4}>
-            <Button as={RouterLink} to="/products" colorScheme="whiteAlpha">
-              Productos
-            </Button>
-            <Button as={RouterLink} to="/cart" colorScheme="whiteAlpha">
-              Carrito
-            </Button>
-            <Button as={RouterLink} to="/login" colorScheme="whiteAlpha" variant="solid">
-              Iniciar Sesión
-            </Button>
-          </Flex>
-        </Flex>
-      </Box>
-
+    <Box bg={useColorModeValue("gray.50", "gray.900")} minH="100vh">
       {/* Main Content */}
-      <Container maxW="container.md" py={12}>
-        <Box
-          p={8}
-          borderWidth="1px"
-          borderRadius="lg"
-          boxShadow="lg"
-          bg={useColorModeValue("white", "gray.800")}
-        >
-          <Stack spacing={6}>
-            <Heading as="h1" size="xl" textAlign="center">
-              Iniciar Sesión
-            </Heading>
-
-            {loginError && (
-              <Alert status="error" borderRadius="md">
-                <AlertIcon />
-                {loginError}
-              </Alert>
-            )}
-
-            <form onSubmit={handleSubmit}>
-              <Stack spacing={4}>
-                <FormControl isInvalid={errors.email}>
-                  <FormLabel>Email</FormLabel>
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl isInvalid={errors.password}>
-                  <FormLabel>Contraseña</FormLabel>
-                  <InputGroup>
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <InputRightElement>
-                      <IconButton
-                        aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                        icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                        variant="ghost"
-                        onClick={() => setShowPassword(!showPassword)}
-                      />
-                    </InputRightElement>
-                  </InputGroup>
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
-                </FormControl>
-
-                <Button
-                  type="submit"
-                  colorScheme="blue"
-                  size="lg"
-                  isLoading={isSubmitting}
-                  loadingText="Iniciando sesión"
+      <Container maxW="container.xl" py={12}>
+        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} alignItems="center">
+          {/* Left Side - Brand */}
+          <Box display={{ base: "none", lg: "block" }}>
+            <VStack spacing={8} align="flex-start">
+              <Box as={RouterLink} to="/" display="flex" alignItems="center">
+                {/* Nike-style Swoosh Logo */}
+                <Box
+                  as="svg"
+                  height="60px"
+                  width="60px"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  mr={2}
                 >
-                  Iniciar Sesión
-                </Button>
-              </Stack>
-            </form>
+                  <path d="M21.5,7.5c-1.3,1.8-2.5,3.2-3.9,4.5c-1.9,1.8-3.8,3.1-5.6,4.3c-2.9,1.8-5.8,2.5-8.7,2.7c-0.8,0-1.3-0.1-1.3-0.5 c0-0.2,0.1-0.3,0.3-0.5c2.8-2.8,7.1-7.1,13.9-10.5c0.7-0.3,1.3-0.6,1.8-0.8c0.9-0.4,1.7-0.7,2.4-0.7c0.4,0,0.7,0.1,0.9,0.3 c0.2,0.2,0.3,0.5,0.3,0.8C21.7,7.2,21.6,7.4,21.5,7.5z"/>
+                </Box>
+                <Heading size="2xl" fontWeight="black">{BRAND.NAME}</Heading>
+              </Box>
 
-            <Flex align="center" justify="center">
-              <Text>¿Olvidaste tu contraseña?</Text>
-              <Button variant="link" colorScheme="blue" ml={2}>
-                Recuperar
-              </Button>
-            </Flex>
-
-            <Divider />
-
-            <Box textAlign="center">
-              <Text mb={2}>¿No tienes una cuenta?</Text>
-              <Button
-                as={RouterLink}
-                to="/register"
-                colorScheme="blue"
-                variant="outline"
+              <Heading
+                as="h1"
+                size="3xl"
+                lineHeight="1.1"
+                fontWeight="black"
+                textTransform="uppercase"
               >
-                Crear Cuenta
-              </Button>
+                TU CUENTA<br />PARA TODO<br />LO RELACIONADO<br />CON {BRAND.NAME}
+              </Heading>
+
+              <Text fontSize="lg" maxW="450px">
+                Inicia sesión para acceder a tus pedidos, favoritos y recomendaciones personalizadas.
+                Forma parte de la comunidad {BRAND.NAME} para disfrutar de beneficios exclusivos.
+              </Text>
+
+              <Image
+                src="https://placehold.co/600x400/black/white?text=SPORTFUSION+MEMBERS"
+                alt="Miembros SportFusion"
+                borderRadius="lg"
+                maxW="450px"
+              />
+            </VStack>
+          </Box>
+
+          {/* Right Side - Login Form */}
+          <Box>
+            <Box
+              bg={useColorModeValue("white", "gray.800")}
+              p={{ base: 6, md: 10 }}
+              borderRadius="xl"
+              shadow="lg"
+              maxW="500px"
+              mx="auto"
+            >
+              <VStack spacing={8} align="stretch">
+                <VStack spacing={2} align="center">
+                  <Heading
+                    as="h2"
+                    size="xl"
+                    textTransform="uppercase"
+                    fontWeight="black"
+                  >
+                    INICIAR SESIÓN
+                  </Heading>
+                  <Text color={useColorModeValue("gray.600", "gray.400")}>
+                    Con tu cuenta de {BRAND.NAME}
+                  </Text>
+                </VStack>
+
+                {loginError && (
+                  <Alert status="error" borderRadius="md">
+                    <AlertIcon />
+                    {loginError}
+                  </Alert>
+                )}
+
+                <form onSubmit={handleSubmit}>
+                  <VStack spacing={6}>
+                    <FormControl isInvalid={errors.email}>
+                      <FormLabel fontWeight="medium">Email</FormLabel>
+                      <Input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        size="lg"
+                        borderRadius="md"
+                        borderColor={useColorModeValue("gray.300", "gray.600")}
+                        _focus={{ borderColor: "black", boxShadow: "none" }}
+                      />
+                      <FormErrorMessage>{errors.email}</FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl isInvalid={errors.password}>
+                      <FormLabel fontWeight="medium">Contraseña</FormLabel>
+                      <InputGroup size="lg">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          borderRadius="md"
+                          borderColor={useColorModeValue("gray.300", "gray.600")}
+                          _focus={{ borderColor: "black", boxShadow: "none" }}
+                        />
+                        <InputRightElement>
+                          <IconButton
+                            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                            variant="ghost"
+                            onClick={() => setShowPassword(!showPassword)}
+                          />
+                        </InputRightElement>
+                      </InputGroup>
+                      <FormErrorMessage>{errors.password}</FormErrorMessage>
+                    </FormControl>
+
+                    <Flex justify="space-between" w="full">
+                      <Checkbox colorScheme="blackAlpha" defaultChecked>
+                        Mantener sesión iniciada
+                      </Checkbox>
+
+                      <Button
+                        variant="link"
+                        color={useColorModeValue("gray.700", "gray.300")}
+                        fontWeight="medium"
+                        _hover={{ color: "black" }}
+                        as={RouterLink}
+                        to="/forgot-password"
+                      >
+                        ¿Olvidaste tu contraseña?
+                      </Button>
+                    </Flex>
+
+                    <Button
+                      type="submit"
+                      bg="black"
+                      color="white"
+                      size="lg"
+                      width="full"
+                      borderRadius="full"
+                      py={6}
+                      _hover={{ bg: "gray.800" }}
+                      isLoading={isSubmitting}
+                      loadingText="Iniciando sesión"
+                      fontWeight="bold"
+                      textTransform="uppercase"
+                      letterSpacing="wide"
+                    >
+                      Iniciar Sesión
+                    </Button>
+                  </VStack>
+                </form>
+
+                <Text textAlign="center" color={useColorModeValue("gray.600", "gray.400")}>
+                  ¿No tienes una cuenta?
+                  <Button
+                    as={RouterLink}
+                    to="/register"
+                    variant="link"
+                    ml={2}
+                    fontWeight="bold"
+                    color={useColorModeValue("black", "white")}
+                  >
+                    Únete ahora
+                  </Button>
+                </Text>
+
+                <Divider />
+
+                <VStack spacing={4}>
+                  <Text fontWeight="medium" textAlign="center">
+                    O inicia sesión con
+                  </Text>
+
+                  <HStack spacing={4} justify="center">
+                    <Button
+                      leftIcon={<Icon as={FaFacebook} />}
+                      colorScheme="facebook"
+                      variant="outline"
+                      borderRadius="full"
+                      w="120px"
+                    >
+                      Facebook
+                    </Button>
+
+                    <Button
+                      leftIcon={<Icon as={FaGoogle} />}
+                      colorScheme="red"
+                      variant="outline"
+                      borderRadius="full"
+                      w="120px"
+                    >
+                      Google
+                    </Button>
+
+                    <Button
+                      leftIcon={<Icon as={FaApple} />}
+                      colorScheme="blackAlpha"
+                      variant="outline"
+                      borderRadius="full"
+                      w="120px"
+                    >
+                      Apple
+                    </Button>
+                  </HStack>
+                </VStack>
+              </VStack>
             </Box>
-          </Stack>
-        </Box>
+          </Box>
+        </SimpleGrid>
       </Container>
 
       {/* Footer */}
-      <Box bg={useColorModeValue("gray.100", "gray.900")} py={10} px={8} mt={10}>
+      <Box bg={useColorModeValue("gray.100", "gray.900")} py={8} px={8}>
         <Container maxW="container.xl">
+          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={8} mb={8}>
+            <VStack align="flex-start" spacing={3}>
+              <Heading as="h4" size="sm" textTransform="uppercase">
+                Ayuda
+              </Heading>
+              <Button as={RouterLink} to="/contact" variant="link" justifyContent="flex-start" size="sm">
+                Contacto
+              </Button>
+              <Button as={RouterLink} to="/shipping" variant="link" justifyContent="flex-start" size="sm">
+                Envíos
+              </Button>
+              <Button as={RouterLink} to="/returns" variant="link" justifyContent="flex-start" size="sm">
+                Devoluciones
+              </Button>
+              <Button as={RouterLink} to="/faq" variant="link" justifyContent="flex-start" size="sm">
+                Preguntas Frecuentes
+              </Button>
+            </VStack>
+
+            <VStack align="flex-start" spacing={3}>
+              <Heading as="h4" size="sm" textTransform="uppercase">
+                Sobre {BRAND.NAME}
+              </Heading>
+              <Button as={RouterLink} to="/about" variant="link" justifyContent="flex-start" size="sm">
+                Nuestra Historia
+              </Button>
+              <Button as={RouterLink} to="/stores" variant="link" justifyContent="flex-start" size="sm">
+                Tiendas
+              </Button>
+              <Button as={RouterLink} to="/sustainability" variant="link" justifyContent="flex-start" size="sm">
+                Sostenibilidad
+              </Button>
+              <Button as={RouterLink} to="/careers" variant="link" justifyContent="flex-start" size="sm">
+                Trabaja con Nosotros
+              </Button>
+            </VStack>
+
+            <VStack align="flex-start" spacing={3}>
+              <Heading as="h4" size="sm" textTransform="uppercase">
+                Políticas
+              </Heading>
+              <Button as={RouterLink} to="/privacy" variant="link" justifyContent="flex-start" size="sm">
+                Privacidad
+              </Button>
+              <Button as={RouterLink} to="/terms" variant="link" justifyContent="flex-start" size="sm">
+                Términos y Condiciones
+              </Button>
+              <Button as={RouterLink} to="/cookies" variant="link" justifyContent="flex-start" size="sm">
+                Cookies
+              </Button>
+            </VStack>
+
+            <VStack align="flex-start" spacing={3}>
+              <Heading as="h4" size="sm" textTransform="uppercase">
+                Síguenos
+              </Heading>
+              <HStack spacing={4}>
+                <Button variant="ghost" borderRadius="full" size="sm" p={0}>
+                  <Icon as={FaFacebook} boxSize={5} />
+                </Button>
+                <Button variant="ghost" borderRadius="full" size="sm" p={0}>
+                  <Icon as={FaGoogle} boxSize={5} />
+                </Button>
+                <Button variant="ghost" borderRadius="full" size="sm" p={0}>
+                  <Icon as={FaApple} boxSize={5} />
+                </Button>
+              </HStack>
+            </VStack>
+          </SimpleGrid>
+
+          <Divider borderColor={useColorModeValue("gray.300", "gray.700")} />
+
           <Flex
             direction={{ base: "column", md: "row" }}
             justify="space-between"
-            align={{ base: "center", md: "flex-start" }}
-            gap={8}
+            align={{ base: "center", md: "center" }}
+            pt={6}
+            fontSize="sm"
+            color={useColorModeValue("gray.600", "gray.400")}
           >
-            <Box>
-              <Heading as="h4" size="md" mb={4}>
-                E-Commerce
-              </Heading>
-              <Text>Tu tienda online de confianza</Text>
-            </Box>
-
-            <Box>
-              <Heading as="h4" size="md" mb={4}>
-                Enlaces
-              </Heading>
-              <Stack spacing={2}>
-                <Button as={RouterLink} to="/" variant="link">
-                  Inicio
-                </Button>
-                <Button as={RouterLink} to="/products" variant="link">
-                  Productos
-                </Button>
-                <Button as={RouterLink} to="/cart" variant="link">
-                  Carrito
-                </Button>
-              </Stack>
-            </Box>
-
-            <Box>
-              <Heading as="h4" size="md" mb={4}>
-                Contacto
-              </Heading>
-              <Text>info@ecommerce.com</Text>
-              <Text>+1 234 567 890</Text>
-            </Box>
+            <Text>© {new Date().getFullYear()} {BRAND.NAME}. Todos los derechos reservados.</Text>
+            <Text mt={{ base: 2, md: 0 }}>{BRAND.SLOGAN}</Text>
           </Flex>
-
-          <Text mt={10} textAlign="center">
-            © {new Date().getFullYear()} E-Commerce. Todos los derechos reservados.
-          </Text>
         </Container>
       </Box>
     </Box>

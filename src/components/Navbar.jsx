@@ -25,10 +25,10 @@ import {
   MenuItem,
   MenuDivider,
   useColorMode,
-  HStack,
   InputGroup,
   Input,
   InputRightElement,
+  HStack,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -38,9 +38,8 @@ import {
   SearchIcon,
   MoonIcon,
   SunIcon,
-  BellIcon,
 } from "@chakra-ui/icons";
-import { FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import BRAND from "../constants/brandConfig";
@@ -50,7 +49,7 @@ export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isAuthenticated, user, logout } = useAuth();
   const { itemCount } = useCart();
-  const location = useLocation();
+  const location = useLocation(); // Usado en DesktopNav
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -82,20 +81,19 @@ export default function Navbar() {
     <Box position="sticky" top="0" zIndex="sticky">
       <Flex
         bg={useColorModeValue(
-          scrolled ? "white" : "transparent",
-          scrolled ? "gray.800" : "transparent"
+          scrolled ? "white" : "white",
+          scrolled ? "black" : "black"
         )}
-        color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
+        color={useColorModeValue("black", "white")}
+        minH={"70px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={scrolled ? "1px" : "0"}
         borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
+        borderColor={useColorModeValue("gray.100", "gray.900")}
         align={"center"}
         transition="all 0.3s ease"
         boxShadow={scrolled ? "sm" : "none"}
-        backdropFilter={scrolled ? "blur(10px)" : "none"}
       >
         <Container maxW="container.xl">
           <Flex
@@ -119,12 +117,25 @@ export default function Navbar() {
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
               fontFamily={"heading"}
               fontWeight="bold"
-              fontSize="xl"
-              color={useColorModeValue("brand.500", "white")}
+              fontSize="2xl"
+              color={useColorModeValue("black", "white")}
               _hover={{
                 textDecoration: "none",
               }}
+              display="flex"
+              alignItems="center"
             >
+              {/* Nike-style Swoosh Logo */}
+              <Box
+                as="svg"
+                height="36px"
+                width="36px"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                mr={2}
+              >
+                <path d="M21.5,7.5c-1.3,1.8-2.5,3.2-3.9,4.5c-1.9,1.8-3.8,3.1-5.6,4.3c-2.9,1.8-5.8,2.5-8.7,2.7c-0.8,0-1.3-0.1-1.3-0.5 c0-0.2,0.1-0.3,0.3-0.5c2.8-2.8,7.1-7.1,13.9-10.5c0.7-0.3,1.3-0.6,1.8-0.8c0.9-0.4,1.7-0.7,2.4-0.7c0.4,0,0.7,0.1,0.9,0.3 c0.2,0.2,0.3,0.5,0.3,0.8C21.7,7.2,21.6,7.4,21.5,7.5z"/>
+              </Box>
               {BRAND.NAME}
             </Link>
 
@@ -227,9 +238,10 @@ export default function Navbar() {
                 to="/login"
                 fontSize={"sm"}
                 fontWeight={600}
-                colorScheme="brand"
-                variant={"outline"}
+                variant={"ghost"}
                 size="sm"
+                color={useColorModeValue("black", "white")}
+                _hover={{ bg: useColorModeValue("gray.100", "whiteAlpha.200") }}
               >
                 Iniciar Sesión
               </Button>
@@ -246,9 +258,9 @@ export default function Navbar() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("brand.500", "white");
-  const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const linkColor = useColorModeValue("gray.700", "gray.300");
+  const linkHoverColor = useColorModeValue("black", "white");
+  const popoverContentBgColor = useColorModeValue("white", "gray.900");
   const location = useLocation();
 
   return (
@@ -367,11 +379,11 @@ const MobileNav = () => {
           </InputRightElement>
         </InputGroup>
       </Box>
-      
+
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
-      
+
       <Box pt={4}>
         <Button
           as={RouterLink}
@@ -447,32 +459,75 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [
   {
-    label: "Inicio",
-    href: "/",
-  },
-  {
-    label: "Productos",
-    href: "/products",
+    label: "Hombre",
+    href: "/products?gender=men",
     children: [
       {
-        label: "Electrónica",
-        subLabel: "Smartphones, laptops y más",
-        href: "/products?category=electronics",
+        label: "Calzado",
+        subLabel: "Zapatillas, botas y sandalias",
+        href: "/products?gender=men&category=shoes",
+      },
+      {
+        label: "Ropa",
+        subLabel: "Camisetas, pantalones y chaquetas",
+        href: "/products?gender=men&category=clothing",
       },
       {
         label: "Accesorios",
-        subLabel: "Auriculares, smartwatches y más",
-        href: "/products?category=accessories",
+        subLabel: "Mochilas, gorras y calcetines",
+        href: "/products?gender=men&category=accessories",
       },
       {
-        label: "Hogar",
-        subLabel: "Decoración y electrodomésticos",
-        href: "/products?category=home",
+        label: "Deporte",
+        subLabel: "Fútbol, running y entrenamiento",
+        href: "/products?gender=men&category=sport",
+      },
+    ],
+  },
+  {
+    label: "Mujer",
+    href: "/products?gender=women",
+    children: [
+      {
+        label: "Calzado",
+        subLabel: "Zapatillas, botas y sandalias",
+        href: "/products?gender=women&category=shoes",
       },
       {
-        label: "Moda",
-        subLabel: "Ropa, calzado y accesorios",
-        href: "/products?category=fashion",
+        label: "Ropa",
+        subLabel: "Camisetas, pantalones y chaquetas",
+        href: "/products?gender=women&category=clothing",
+      },
+      {
+        label: "Accesorios",
+        subLabel: "Mochilas, gorras y calcetines",
+        href: "/products?gender=women&category=accessories",
+      },
+      {
+        label: "Deporte",
+        subLabel: "Yoga, running y entrenamiento",
+        href: "/products?gender=women&category=sport",
+      },
+    ],
+  },
+  {
+    label: "Niños",
+    href: "/products?gender=kids",
+    children: [
+      {
+        label: "Niños pequeños",
+        subLabel: "Edades 1-4",
+        href: "/products?gender=kids&age=toddler",
+      },
+      {
+        label: "Niños",
+        subLabel: "Edades 5-12",
+        href: "/products?gender=kids&age=children",
+      },
+      {
+        label: "Adolescentes",
+        subLabel: "Edades 13-17",
+        href: "/products?gender=kids&age=teens",
       },
     ],
   },
@@ -483,9 +538,5 @@ const NAV_ITEMS = [
   {
     label: "Novedades",
     href: "/new-arrivals",
-  },
-  {
-    label: "Contacto",
-    href: "/contact",
   },
 ];

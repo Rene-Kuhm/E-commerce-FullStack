@@ -16,220 +16,220 @@ import {
   HStack,
   Icon,
   VStack,
+  SimpleGrid,
+  Tag,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Input,
 } from "@chakra-ui/react";
-import { StarIcon } from "@chakra-ui/icons";
-import { FaTag, FaFire, FaClock } from "react-icons/fa";
+import { ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
+import { FaTag, FaFire, FaClock, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import { setDocumentMeta } from "../utils/metaUtils";
 import BRAND from "../constants/brandConfig";
+import NikeStyleHero from "../components/NikeStyleHero";
 
-// Datos de ejemplo para ofertas
+// Datos de ejemplo para ofertas (estilo Nike)
 const mockOffers = [
   {
-    id: "1",
-    name: "Smartphone XYZ Pro",
-    description: "El último modelo con 50% de descuento",
-    originalPrice: 999.99,
-    discountPrice: 499.99,
-    discountPercentage: 50,
-    image: "https://placehold.co/300x300/red/white?text=50%25+OFF",
-    category: "Electrónica",
-    stock: 5,
+    id: "o1",
+    name: "Zapatillas Air Max",
+    description: "Amortiguación excepcional y estilo icónico para tu día a día",
+    originalPrice: 159.99,
+    discountPrice: 129.99,
+    discountPercentage: 20,
+    image: "https://placehold.co/300x300/black/white?text=Air+Max",
+    category: "Calzado",
+    gender: "Hombre",
+    stock: 10,
     rating: 4.8,
     reviewCount: 120,
     badge: "Oferta Flash",
-    endsIn: "2 días"
+    endsIn: "2 días",
+    isBestseller: true
   },
   {
-    id: "2",
-    name: "Auriculares Inalámbricos Premium",
-    description: "Sonido de alta calidad con 40% de descuento",
-    originalPrice: 199.99,
-    discountPrice: 119.99,
-    discountPercentage: 40,
-    image: "https://placehold.co/300x300/red/white?text=40%25+OFF",
-    category: "Accesorios",
+    id: "o2",
+    name: "Camiseta Dri-FIT",
+    description: "Manténte fresco y seco durante tus entrenamientos",
+    originalPrice: 49.99,
+    discountPrice: 34.99,
+    discountPercentage: 30,
+    image: "https://placehold.co/300x300/black/white?text=Dri-FIT",
+    category: "Ropa",
+    gender: "Hombre",
     stock: 15,
     rating: 4.5,
     reviewCount: 85,
     badge: "Oferta Limitada",
-    endsIn: "3 días"
+    endsIn: "3 días",
+    isBestseller: false
   },
   {
-    id: "3",
-    name: "Smartwatch Serie 5",
-    description: "Monitorea tu actividad con 35% de descuento",
-    originalPrice: 299.99,
-    discountPrice: 194.99,
-    discountPercentage: 35,
-    image: "https://placehold.co/300x300/red/white?text=35%25+OFF",
-    category: "Accesorios",
+    id: "o3",
+    name: "Zapatillas Running React",
+    description: "Ligereza y respuesta para tus carreras diarias",
+    originalPrice: 139.99,
+    discountPrice: 119.99,
+    discountPercentage: 15,
+    image: "https://placehold.co/300x300/black/white?text=React",
+    category: "Calzado",
+    gender: "Mujer",
     stock: 8,
     rating: 4.6,
     reviewCount: 67,
     badge: "Oferta Especial",
-    endsIn: "1 semana"
+    endsIn: "1 semana",
+    isBestseller: true
   },
   {
-    id: "4",
-    name: "Laptop Ultra Delgada",
-    description: "Potente y ligera con 30% de descuento",
-    originalPrice: 1499.99,
-    discountPrice: 1049.99,
+    id: "o4",
+    name: "Leggings Pro",
+    description: "Ajuste perfecto y soporte para cualquier entrenamiento",
+    originalPrice: 69.99,
+    discountPrice: 49.99,
     discountPercentage: 30,
-    image: "https://placehold.co/300x300/red/white?text=30%25+OFF",
-    category: "Electrónica",
-    stock: 3,
-    rating: 4.9,
-    reviewCount: 42,
-    badge: "Oferta del Mes",
-    endsIn: "5 días"
-  },
-  {
-    id: "5",
-    name: "Altavoz Bluetooth Resistente al Agua",
-    description: "Sonido potente para exteriores con 45% de descuento",
-    originalPrice: 129.99,
-    discountPrice: 71.49,
-    discountPercentage: 45,
-    image: "https://placehold.co/300x300/red/white?text=45%25+OFF",
-    category: "Accesorios",
+    image: "https://placehold.co/300x300/black/white?text=Leggings",
+    category: "Ropa",
+    gender: "Mujer",
     stock: 12,
     rating: 4.3,
     reviewCount: 56,
     badge: "Oferta Relámpago",
-    endsIn: "24 horas"
+    endsIn: "24 horas",
+    isBestseller: false
   },
   {
-    id: "6",
-    name: "Cámara Digital 4K",
-    description: "Captura momentos especiales con 25% de descuento",
-    originalPrice: 599.99,
-    discountPrice: 449.99,
+    id: "o5",
+    name: "Mochila Training",
+    description: "Espacio para todo tu equipo con compartimentos organizados",
+    originalPrice: 89.99,
+    discountPrice: 65.99,
     discountPercentage: 25,
-    image: "https://placehold.co/300x300/red/white?text=25%25+OFF",
-    category: "Electrónica",
+    image: "https://placehold.co/300x300/black/white?text=Mochila",
+    category: "Accesorios",
+    gender: "Unisex",
     stock: 7,
     rating: 4.7,
     reviewCount: 38,
     badge: "Oferta Exclusiva",
-    endsIn: "4 días"
+    endsIn: "4 días",
+    isBestseller: false
+  },
+  {
+    id: "o6",
+    name: "Zapatillas Niños Star Runner",
+    description: "Comodidad y durabilidad para los más pequeños",
+    originalPrice: 69.99,
+    discountPrice: 54.99,
+    discountPercentage: 20,
+    image: "https://placehold.co/300x300/black/white?text=Kids",
+    category: "Calzado",
+    gender: "Niños",
+    stock: 9,
+    rating: 4.4,
+    reviewCount: 42,
+    badge: "Oferta del Mes",
+    endsIn: "5 días",
+    isBestseller: false
+  },
+  {
+    id: "o7",
+    name: "Sudadera Tech Fleece",
+    description: "Calidez sin peso extra para tus días fríos",
+    originalPrice: 119.99,
+    discountPrice: 89.99,
+    discountPercentage: 25,
+    image: "https://placehold.co/300x300/black/white?text=Sudadera",
+    category: "Ropa",
+    gender: "Hombre",
+    stock: 6,
+    rating: 4.9,
+    reviewCount: 72,
+    badge: "Oferta Especial",
+    endsIn: "3 días",
+    isBestseller: true
+  },
+  {
+    id: "o8",
+    name: "Balón de Fútbol Strike",
+    description: "Precisión y durabilidad para tus partidos",
+    originalPrice: 39.99,
+    discountPrice: 29.99,
+    discountPercentage: 25,
+    image: "https://placehold.co/300x300/black/white?text=Balon",
+    category: "Deporte",
+    gender: "Unisex",
+    stock: 20,
+    rating: 4.5,
+    reviewCount: 48,
+    badge: "Oferta Limitada",
+    endsIn: "1 semana",
+    isBestseller: false
   }
 ];
 
 const OffersPage = () => {
   const { addToCart } = useCart();
-  const [offers, setOffers] = useState(mockOffers);
-  
+  const [sortedOffers, setSortedOffers] = useState([]);
+
   useEffect(() => {
     setDocumentMeta(
-      "Ofertas Especiales", 
-      "Descubre nuestras ofertas exclusivas con descuentos de hasta el 50%. ¡Aprovecha ahora!"
+      `Ofertas | ${BRAND.NAME}`,
+      "Descubre nuestras mejores ofertas en productos deportivos. Precios especiales por tiempo limitado."
     );
+
+    // Ordenar ofertas por porcentaje de descuento (mayor a menor)
+    const sorted = [...mockOffers].sort((a, b) => b.discountPercentage - a.discountPercentage);
+    setSortedOffers(sorted);
   }, []);
-  
+
   return (
     <Box>
-      {/* Hero Section */}
-      <Box 
-        bg={useColorModeValue("red.500", "red.700")} 
-        color="white"
-        py={12}
-        position="relative"
-        overflow="hidden"
-      >
-        <Box 
-          position="absolute" 
-          top="0" 
-          left="0" 
-          right="0" 
-          bottom="0" 
-          opacity="0.1" 
-          backgroundImage="url('https://placehold.co/1200x400/red/white?text=OFERTAS')"
-          backgroundSize="cover"
-          backgroundPosition="center"
-        />
-        <Container maxW="container.xl" position="relative">
-          <VStack spacing={4} align="center" textAlign="center">
-            <Badge 
-              colorScheme="white" 
-              px={3} 
-              py={1} 
-              borderRadius="full" 
-              fontSize="sm"
-              border="1px solid white"
-            >
-              Tiempo Limitado
-            </Badge>
-            <Heading 
-              as="h1" 
-              size="2xl" 
-              fontWeight="bold"
-              textShadow="0 2px 4px rgba(0,0,0,0.2)"
-            >
-              Ofertas Especiales
-            </Heading>
-            <Text fontSize="xl" maxW="container.md">
-              Descubre nuestras ofertas exclusivas con descuentos de hasta el 50%. ¡No te pierdas estas oportunidades!
-            </Text>
-            <HStack spacing={4} mt={4}>
-              <Button 
-                as={RouterLink} 
-                to="#offers" 
-                colorScheme="white" 
-                size="lg"
-                variant="outline"
-                _hover={{ bg: "whiteAlpha.200" }}
-              >
-                Ver Ofertas
-              </Button>
-              <Button 
-                as={RouterLink} 
-                to="/products" 
-                colorScheme="white" 
-                size="lg"
-                bg="whiteAlpha.300"
-                _hover={{ bg: "whiteAlpha.400" }}
-              >
-                Todos los Productos
-              </Button>
-            </HStack>
-          </VStack>
-        </Container>
-      </Box>
+      {/* Hero Banner */}
+      <NikeStyleHero
+        title="OFERTAS ESPECIALES"
+        subtitle="Tiempo limitado. Precios increíbles."
+        description="Aprovecha nuestras ofertas exclusivas en productos seleccionados. No esperes demasiado, estas ofertas tienen fecha límite."
+        height={{ base: "50vh", md: "40vh" }}
+        imageSrc="https://placehold.co/1200x400/red/white?text=OFERTAS+ESPECIALES"
+        imagePosition="background"
+        bgColor="red.600"
+      />
 
       {/* Offers Categories */}
       <Container maxW="container.xl" py={10}>
-        <Flex 
-          justify="space-between" 
-          wrap="wrap" 
+        <Flex
+          justify="space-between"
+          wrap="wrap"
           gap={4}
           mb={10}
         >
-          <Button 
-            size="lg" 
-            colorScheme="red" 
-            variant="ghost" 
+          <Button
+            size="lg"
+            colorScheme="red"
+            variant="ghost"
             leftIcon={<Icon as={FaFire} />}
             borderRadius="full"
             fontWeight="normal"
           >
             Ofertas Flash
           </Button>
-          <Button 
-            size="lg" 
-            colorScheme="red" 
-            variant="ghost" 
+          <Button
+            size="lg"
+            colorScheme="red"
+            variant="ghost"
             leftIcon={<Icon as={FaTag} />}
             borderRadius="full"
             fontWeight="normal"
           >
             Descuentos Mayores
           </Button>
-          <Button 
-            size="lg" 
-            colorScheme="red" 
-            variant="ghost" 
+          <Button
+            size="lg"
+            colorScheme="red"
+            variant="ghost"
             leftIcon={<Icon as={FaClock} />}
             borderRadius="full"
             fontWeight="normal"
@@ -243,13 +243,13 @@ const OffersPage = () => {
           <Heading as="h2" size="xl" mb={8}>
             Ofertas Destacadas
           </Heading>
-          
-          <Grid 
+
+          <Grid
             templateColumns={{ base: "1fr", sm: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }}
             gap={8}
           >
             {offers.map(offer => (
-              <Box 
+              <Box
                 key={offer.id}
                 borderWidth="1px"
                 borderRadius="lg"
@@ -260,12 +260,12 @@ const OffersPage = () => {
                 position="relative"
               >
                 {/* Discount Badge */}
-                <Badge 
-                  position="absolute" 
-                  top="10px" 
-                  right="10px" 
-                  colorScheme="red" 
-                  fontSize="md" 
+                <Badge
+                  position="absolute"
+                  top="10px"
+                  right="10px"
+                  colorScheme="red"
+                  fontSize="md"
                   borderRadius="md"
                   px={2}
                   py={1}
@@ -274,29 +274,29 @@ const OffersPage = () => {
                 >
                   {offer.discountPercentage}% OFF
                 </Badge>
-                
+
                 {/* Offer Badge */}
-                <Badge 
-                  position="absolute" 
-                  top="10px" 
-                  left="10px" 
-                  colorScheme="purple" 
-                  fontSize="sm" 
+                <Badge
+                  position="absolute"
+                  top="10px"
+                  left="10px"
+                  colorScheme="purple"
+                  fontSize="sm"
                   borderRadius="md"
                   px={2}
                   py={1}
                 >
                   {offer.badge}
                 </Badge>
-                
-                <Image 
-                  src={offer.image} 
+
+                <Image
+                  src={offer.image}
                   alt={offer.name}
                   height="220px"
                   width="100%"
                   objectFit="cover"
                 />
-                
+
                 <Box p={5}>
                   <Box mb={2}>
                     <Heading as="h3" size="md" height="50px" overflow="hidden">
@@ -306,7 +306,7 @@ const OffersPage = () => {
                       {offer.description}
                     </Text>
                   </Box>
-                  
+
                   <HStack spacing={1} mt={2} mb={2}>
                     {Array(5)
                       .fill("")
@@ -320,35 +320,35 @@ const OffersPage = () => {
                       ({offer.reviewCount})
                     </Text>
                   </HStack>
-                  
+
                   <HStack spacing={2} mt={3} color="red.500">
                     <Icon as={FaClock} />
                     <Text fontSize="sm" fontWeight="medium">
                       Termina en: {offer.endsIn}
                     </Text>
                   </HStack>
-                  
+
                   <Divider my={3} />
-                  
+
                   <Flex justify="space-between" align="center">
                     <Stack>
-                      <Text 
-                        fontSize="lg" 
-                        fontWeight="bold" 
+                      <Text
+                        fontSize="lg"
+                        fontWeight="bold"
                         color={useColorModeValue("gray.700", "white")}
                       >
                         ${offer.discountPrice.toFixed(2)}
                       </Text>
-                      <Text 
-                        fontSize="sm" 
+                      <Text
+                        fontSize="sm"
                         color={useColorModeValue("gray.500", "gray.400")}
                         textDecoration="line-through"
                       >
                         ${offer.originalPrice.toFixed(2)}
                       </Text>
                     </Stack>
-                    <Button 
-                      colorScheme="red" 
+                    <Button
+                      colorScheme="red"
                       onClick={() => addToCart({
                         ...offer,
                         price: offer.discountPrice
@@ -362,12 +362,12 @@ const OffersPage = () => {
             ))}
           </Grid>
         </Box>
-        
+
         {/* CTA Section */}
-        <Box 
-          mt={16} 
-          p={8} 
-          bg={useColorModeValue("gray.100", "gray.700")} 
+        <Box
+          mt={16}
+          p={8}
+          bg={useColorModeValue("gray.100", "gray.700")}
           borderRadius="lg"
           textAlign="center"
         >
@@ -377,10 +377,10 @@ const OffersPage = () => {
           <Text mb={6} maxW="container.md" mx="auto">
             Suscríbete a nuestro newsletter y recibe notificaciones sobre nuevas ofertas y descuentos exclusivos.
           </Text>
-          <Button 
-            as={RouterLink} 
-            to="/contact" 
-            colorScheme="brand" 
+          <Button
+            as={RouterLink}
+            to="/contact"
+            colorScheme="brand"
             size="lg"
           >
             Suscribirse Ahora
