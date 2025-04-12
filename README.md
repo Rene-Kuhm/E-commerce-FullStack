@@ -1,11 +1,40 @@
-# React + Vite
+# E-commerce FullStack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto completo de e-commerce con frontend y backend.
 
-Currently, two official plugins are available:
+## Estructura del Proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **frontend/**: Aplicación frontend desarrollada con React y Chakra UI, con un diseño inspirado en la tienda de Nike.
+  - Componentes reutilizables
+  - Páginas: Home, Productos, Ofertas, Novedades, Login/Registro
+  - Estilo minimalista y profesional
+
+## Tecnologías Utilizadas
+
+### Frontend
+
+- React
+- Chakra UI
+- React Router
+- Context API
+
+## Instalación y Ejecución
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Características
+
+- Diseño responsive
+- Componentes reutilizables
+- Navegación fluida entre páginas
+- Carrito de compras funcional
+- Autenticación de usuarios
 
 ## Expanding the ESLint configuration
 
